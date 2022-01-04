@@ -1,12 +1,16 @@
-import { Avatar, Box, Flex, HStack, Icon, Input, Text, useBreakpointValue } from "@chakra-ui/react";
-import { RiNotificationLine, RiSearchLine, RiUserAddLine } from "react-icons/ri"
+import { Avatar, Box, Flex, HStack, Icon, IconButton, Input, Text, useBreakpointValue } from "@chakra-ui/react";
+import { RiMenuLine, RiNotificationLine, RiSearchLine, RiUserAddLine } from "react-icons/ri"
+import { useSidebarDrawer } from "../contexts/SidebarDrawerContext";
 
 
 export function Header() {
-    const { } = useBreakpointValue({
+    const { onOpen } = useSidebarDrawer()
+
+    const isWideVersion = useBreakpointValue({
         base: false, // Os dados não estejam visiveis quando passar do tamanho setado
-        lg:true,
+        lg: true,
     })
+
 
     return (
         <Flex
@@ -19,9 +23,19 @@ export function Header() {
             px="6"
             align="center"
         >
+            {!isWideVersion && (
+                <IconButton
+                    aria-label="Open navigation"
+                    icon={<Icon as={RiMenuLine} />}
+                    fontSize={["20", "24"]}
+                    variant="unstyled"
+                    onClick={onOpen}
+                    mr="2"
+                ></IconButton>
+            )}
 
             <Text
-                fontSize='3xl'
+                fontSize={["1xl", '3xl']}
                 fontWeight="bold"
                 letterSpacing='tight'
                 w="64"
@@ -30,33 +44,36 @@ export function Header() {
                 dashgo
                 <Text color='pink.500' as="span" ml="1">.</Text>
             </Text>
-            <Flex
-                as="label"
-                flex='1'
-                py='4'
-                px='8'
-                ml='6'
-                maxWidth={400}
-                alignSelf="center"
-                color="gray.200"
-                position='relative'
-                bg='gray.800'
-                borderRadius='full'
-            >
-                <Input
-                    color='gray.50'
-                    variant="unstyled"
-                    px="4"
-                    mr="4"
-                    placeholder="Buscar na plataforma"
-                    _placeholder={{ color: 'gray.400' }}>
+
+            {isWideVersion && (
+                <Flex
+                    as="label"
+                    flex='1'
+                    py='4'
+                    px='8'
+                    ml='6'
+                    maxWidth={400}
+                    alignSelf="center"
+                    color="gray.200"
+                    position='relative'
+                    bg='gray.800'
+                    borderRadius='full'>
+                    <Input
+                        color='gray.50'
+                        variant="unstyled"
+                        px="4"
+                        mr="4"
+                        placeholder="Buscar na plataforma"
+                        _placeholder={{ color: 'gray.400' }}>
 
 
-                </Input>
-                <Icon as={RiSearchLine} fontSize="20"></Icon>
+                    </Input>
+                    <Icon as={RiSearchLine} fontSize={["10", "20"]}></Icon>
+                </Flex>
+            )}
 
 
-            </Flex>
+
             <Flex
                 align="center"
                 ml="auto">
@@ -74,10 +91,15 @@ export function Header() {
                 </HStack>
 
                 <Flex>
-                    <Box mr='4' textAlign='right'>
-                        <Text>Vinicius Silva</Text>
-                        <Text> viniciussilvabarros05@hotmail.com</Text>
-                    </Box>
+
+                    {isWideVersion ? (
+                        <Box mr='4' textAlign='right'>
+
+                            <Text>Vinicius Silva</Text>
+                            <Text> viniciussilvabarros05@hotmail.com</Text>
+
+                        </Box>
+                    ) : ""}
 
                     <Avatar size="md" name="Vinicius Silva" src="https://github.com/viniciussilvabarros05.png" ></Avatar>
                 </Flex>
