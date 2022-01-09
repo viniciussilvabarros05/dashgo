@@ -78,9 +78,9 @@ export function Header() {
                 align="center"
                 ml="auto">
                 <HStack
-                    spacing={["6", "8",]}
-                    mx={["6", "8",]}
-                    pr={["6", "8",]}
+                    spacing={["6", "8"]}
+                    mx={["6", "8"]}
+                    pr={["6", "8"]}
                     py="1"
                     color="gray.300"
                     borderRightWidth={1}

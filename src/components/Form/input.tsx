@@ -1,13 +1,18 @@
-import { FormControl, FormLabel, Input as ChakraInput, InputProps as ChakraInputProps } from "@chakra-ui/react";
+import { FormControl, FormErrorMessage, FormLabel, Input as ChakraInput, InputProps as ChakraInputProps } from "@chakra-ui/react";
+import { forwardRef, ForwardRefRenderFunction } from 'react'
+import { FieldError } from 'react-hook-form'
 
 interface InputProps extends ChakraInputProps {
     name: string;
     label?: string;
+    error?: FieldError;
 }
 
-export function Input({ name, label, ...rest }: InputProps) {
+//ForwardRefRenderFunctioné uma função de renderização , que recebe props e parâmetros ref e retorna um nó React - não é um componente:
+
+const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = ({ name, label, error = null, ...rest }, ref) => {
     return (
-        <FormControl>
+        <FormControl isInvalid={!!error}>
             {!!label && <FormLabel htmlFor={name}>{label}</FormLabel>}
             <ChakraInput
                 id={name}
@@ -20,9 +25,19 @@ export function Input({ name, label, ...rest }: InputProps) {
                     bgColor: "gray.900"
                 }}
                 size='lg'
+                ref={ref}
+
                 {...rest}
             />
+            {/* Componente de dentro do chakra que mostra mensagens no formulário */}
+            {!!error &&
+                <FormErrorMessage>
+                    {error.message}
+                </FormErrorMessage>
+            }
         </FormControl>
 
     )
 }
+
+export const Input = forwardRef(InputBase) // Embalando um componente para poder receber uma ref

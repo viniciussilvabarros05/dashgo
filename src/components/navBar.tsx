@@ -23,7 +23,7 @@ export function NavBar() {
                 <Stack spacing="4" mt="8" align="stretch">
                     <NavLink href="#" icon={RiInputMethodLine}>Formulários</NavLink>
 
-                    <NavLink href="/users" icon={RiGitMergeLine}>Usuários</NavLink>
+                    <NavLink href="#" icon={RiGitMergeLine}>Automação</NavLink>
                 </Stack>
             </Box>
 
